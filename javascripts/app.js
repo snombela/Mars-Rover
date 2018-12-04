@@ -3,12 +3,13 @@
 var rover = {
   direction: "N",
   x: 0,
-  y: 0
+  y: 0,
+  travelLog: []
 }
 
 // ======================
 function turnLeft(rover){
-  console.log("The start position is " + rover.direction);
+ // console.log("The start position is " + rover.direction);
   switch (rover.direction) {
     case "N":
     rover.direction = "W";
@@ -23,11 +24,11 @@ function turnLeft(rover){
     rover.direction = "N";
     break;
   }
-  console.log("The current position is " + rover.direction);
+ // console.log("The current position is " + rover.direction);
 }
 
 function turnRight(rover){
-  console.log("The start position is " + rover.direction);
+ // console.log("The start position is " + rover.direction);
   switch (rover.direction) {
     case "N":
     rover.direction = "E";
@@ -42,11 +43,11 @@ function turnRight(rover){
     rover.direction = "N";
     break;
   }
-  console.log("The current position is " + rover.direction);
+ // console.log("The current position is " + rover.direction);
 }
 
 function moveForward(rover){
-  console.log("The start position is [" + rover.x + ", " + rover.y + "]");
+ // console.log("The start position is [" + rover.x + ", " + rover.y + "]");
   switch (rover.direction) {
     case "N":
     rover.y -= 1;
@@ -61,7 +62,8 @@ function moveForward(rover){
     rover.x -= 1;
     break;
   }
-  console.log("The current position is [" + rover.x + ", " + rover.y + "]");
+  //console.log("The current position is [" + rover.x + ", " + rover.y + "]");
+  rover.travelLog.push("[" + rover.x + ", " + rover.y + "]");
 }
 
 function executeCommand(command){
@@ -78,5 +80,9 @@ function executeCommand(command){
       break;
     }
   }
+
+  console.log(rover.travelLog);
 }
+
+
 
