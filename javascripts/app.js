@@ -62,5 +62,21 @@ function moveForward(rover){
     break;
   }
   console.log("The current position is [" + rover.x + ", " + rover.y + "]");
-  
 }
+
+function executeCommand(command){
+  for (var i = 0; i < command.length; i++){
+    switch (command[i]) {
+      case "r":
+      turnRight(rover);
+      break;
+      case "l":
+      turnLeft(rover);
+      break;
+      case "f":
+      moveForward(rover);
+      break;
+    }
+  }
+}
+
