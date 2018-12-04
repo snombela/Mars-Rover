@@ -74,7 +74,42 @@ function moveForward(rover){
   rover.travelLog.push("[" + rover.x + ", " + rover.y + "]");
 }
 
+function moveBackward(rover){
+  // console.log("The start position is [" + rover.x + ", " + rover.y + "]");
+   switch (rover.direction) {
+     case "N":
+     if (rover.y != 9) {
+       rover.y += 1;
+     }
+     break;
+     case "E":
+     if (rover.x != 0) {
+       rover.x -= 1;
+     }
+     break;
+     case "S":
+     if (rover.y != 0) {
+       rover.y -= 1;
+     }
+     break;
+     case "W":
+     if (rover.x != 9) {
+       rover.x += 1;
+     }
+     break;
+   }
+   //console.log("The current position is [" + rover.x + ", " + rover.y + "]");
+   rover.travelLog.push("[" + rover.x + ", " + rover.y + "]");
+ }
+
 function executeCommand(command){
+  for (var i = 0; i < command.length; i++){
+    if (command[i] !== "r" && command[i] !== "l" && command[i] !== "f" && command[i] !== "b") {
+      console.log("The value is incorrect");
+      return;
+    }
+  }
+    
   for (var i = 0; i < command.length; i++){
     switch (command[i]) {
       case "r":
@@ -85,6 +120,9 @@ function executeCommand(command){
       break;
       case "f":
       moveForward(rover);
+      break;
+      case "b":
+      moveBackward(rover);
       break;
     }
   }
