@@ -15,113 +15,133 @@ var mars = {
 }
 
 // ======================
-function turnLeft(rover){
- // console.log("The start position is " + rover.direction);
-  switch (rover.direction) {
+function turnLeft(robot){
+ // console.log("The start position is " + robot.direction);
+  switch (robot.direction) {
     case "N":
-    rover.direction = "W";
+    robot.direction = "W";
     break;
     case "W":
-    rover.direction = "S";
+    robot.direction = "S";
     break;
     case "S":
-    rover.direction = "E";
+    robot.direction = "E";
     break;
     case "E":
-    rover.direction = "N";
+    robot.direction = "N";
     break;
   }
  // console.log("The current position is " + rover.direction);
 }
 
-function turnRight(rover){
- // console.log("The start position is " + rover.direction);
-  switch (rover.direction) {
+function turnRight(robot){
+ // console.log("The start position is " + robot.direction);
+  switch (robot.direction) {
     case "N":
-    rover.direction = "E";
+    robot.direction = "E";
     break;
     case "E":
-    rover.direction = "S";
+    robot.direction = "S";
     break;
     case "S":
-    rover.direction = "W";
+    robot.direction = "W";
     break;
     case "W":
-    rover.direction = "N";
+    robot.direction = "N";
     break;
   }
- // console.log("The current position is " + rover.direction);
+ // console.log("The current position is " + robot.direction);
 }
 
-function moveForward(rover){
- // console.log("The start position is [" + rover.x + ", " + rover.y + "]");
-  switch (rover.direction) {
+function moveForward(robot){
+ // console.log("The start position is [" + robot.x + ", " + robot.y + "]");
+
+ other = (robot == rover) ? mars : rover;
+
+  switch (robot.direction) {
     case "N":
-    if (rover.y != 0) {
-      if (board[rover.y - 1][rover.x] == "O"){
-        console.log("The rover has crushed with a obstacle");
+    if (robot.y != 0) {
+      if (board[robot.y - 1][robot.x] == "O"){
+        console.log("The robot has crushed with a obstacle");
+      } else if (robot.y -1 == other.y && robot.x == other.x) {
+        console.log("The robot has crushed with another robot");
       } else {
-        rover.y -= 1;
+        robot.y -= 1;
       }
     }
     break;
     case "E":
-    if (rover.x != 9) {
-      if (board[rover.y][rover.x + 1] == "O"){
+    if (robot.x != 9) {
+      if (board[robot.y][robot.x + 1] == "O"){
         console.log("The rover has crushed with a obstacle");
+      } else if (robot.y == other.y && robot.x +1 == other.x) {
+        console.log("The robot has crushed with another robot");
       } else {
-        rover.x += 1;
+        robot.x += 1;
       }
     }
     break;
     case "S":
-    if (rover.y != 9) {
-      if (board[rover.y + 1][rover.x] == "O"){
+    if (robot.y != 9) {
+      if (board[robot.y + 1][robot.x] == "O"){
         console.log("The rover has crushed with a obstacle");
+      } else if (robot.y + 1 == other.y && robot.x == other.x) {
+        console.log("The robot has crushed with another robot");
       } else {
-        rover.y += 1;
+        robot.y += 1;
       }
     }
     break;
     case "W":
-    if (rover.x != 0) {
-      if (board[rover.y ][rover.x - 1] == "O"){
+    if (robot.x != 0) {
+      if (board[robot.y][robot.x - 1] == "O"){
         console.log("The rover has crushed with a obstacle");
+      } else if (robot.y == other.y && robot.x -1 == other.x) {
+        console.log("The robot has crushed with another robot");
       } else {
-        rover.x -= 1;
+        robot.x -= 1;
       }
     } 
     break;
   }
-  //console.log("The current position is [" + rover.x + ", " + rover.y + "]");
-  rover.travelLog.push("[" + rover.x + ", " + rover.y + "]");
+  //console.log("The current position is [" + robot.x + ", " + robot.y + "]");
+  robot.travelLog.push("[" + robot.x + ", " + robot.y + "]");
 }
 
-function moveBackward(rover){
-  // console.log("The start position is [" + rover.x + ", " + rover.y + "]");
-   switch (rover.direction) {
+function moveBackward(robot){
+  // console.log("The start position is [" + robot.x + ", " + robot.y + "]");
+
+  other = (robot == rover) ? mars : rover;
+
+   switch (robot.direction) {
      case "N":
-     if (rover.y != 9) {
-        if (board[rover.y + 1][rover.x] == "O"){
+     if (robot.y != 9) {
+        if (board[robot.y + 1][robot.x] == "O") {
             console.log("The rover has crushed with a obstacle");
+        } else if (robot.y +1 == other.y && robot.x == other.x) {
+            console.log("The robot has crushed with another robot");
         } else {
-            rover.y += 1;
+          robot.y += 1;
         }
      }
      break;
      case "E":
-     if (rover.x != 0) {
-       if (board[rover.y][rover.x -1] == "O"){
-          console.log("The rover has crushed with a obstacle");
-       } else {
-        rover.x -= 1;
+     if (robot.x != 0) {
+       if (board[robot.y][robot.x -1] == "O"){
+          console.log("The robot has crushed with a obstacle");
+      } else if (robot.y== other.y && robot.x -1 == other.x) {
+        console.log("The robot has crushed with another robot");
+      } else {
+        robot.x -= 1;
        }
      }
      break;
      case "S":
-     if (rover.y != 0) {
-        if (board[rover.y - 1][rover.x] == "O") {
-          console.log("The rover has crushed with a obstacle");
+     if (robot.y != 0) {
+        if (board[robot.y - 1][robot.x] == "O") {
+          console.log("The robot has crushed with a obstacle");
+        } else if (robot.y -1 == other.y && robot.x == other.x) {
+          console.log("The robot has crushed with another robot");
         } else {
           rover.y -= 1;
         }
@@ -129,16 +149,18 @@ function moveBackward(rover){
      break;
      case "W":
      if (rover.x != 9) {
-        if (board[rover.y][rover.x +1] == "O"){
-          console.log("The rover has crushed with a obstacle");
+        if (board[robot.y][robot.x +1] == "O"){
+          console.log("The robot has crushed with a obstacle");
+        } else if (robot.y== other.y && robot.x +1 == other.x) {
+          console.log("The robot has crushed with another robot");
         } else {
-          rover.x += 1;
+          robot.x += 1;
         }
      }
      break;
    }
-   //console.log("The current position is [" + rover.x + ", " + rover.y + "]");
-   rover.travelLog.push("[" + rover.x + ", " + rover.y + "]");
+   //console.log("The current position is [" + robot.x + ", " + robot.y + "]");
+   robot.travelLog.push("[" + robot.x + ", " + robot.y + "]");
  }
 
 function executeCommand(robot, command){
@@ -166,9 +188,8 @@ function executeCommand(robot, command){
     }
   }
 
-  // console.log(rover.travelLog);
+  // console.log(robot.travelLog);
   printGrid();
-  
 }
 
 var board = [
@@ -176,29 +197,13 @@ var board = [
   [" "," "," "," "," "," "," "," "," "," "],
   [" "," "," "," "," "," "," "," "," "," "],
   [" "," "," "," "," "," "," "," "," "," "],
-  [" "," "," "," "," "," "," "," "," "," "],
+  [" "," "," "," "," ","O"," "," "," "," "],
   [" "," "," "," "," "," "," "," "," "," "],
   [" "," "," "," "," "," "," "," "," "," "],
   [" "," "," "," "," "," ","O"," "," "," "],
   [" "," ","O"," "," "," "," "," "," "," "],
   [" "," "," "," "," "," "," "," "," "," "],
 ];
-
-/*function obstacles(rover) {
-
-  for (var i = 0; i < board.length; i++){
-    var row = board[i];
-
-    for (var j = 0; j < board.length; j++){
-      var column = row[j];
-      if (column === "O"){
-      console.log("There is an obstacle in " + i + ", " + j);
-      }
-    }
-  }
-}*/
-
-
 
 function printGrid() {
   var text = ""
