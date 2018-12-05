@@ -7,6 +7,13 @@ var rover = {
   travelLog: []
 }
 
+var mars = {
+  direction: "S",
+  x: 9,
+  y: 0,
+  travelLog: []
+}
+
 // ======================
 function turnLeft(rover){
  // console.log("The start position is " + rover.direction);
@@ -50,32 +57,40 @@ function moveForward(rover){
  // console.log("The start position is [" + rover.x + ", " + rover.y + "]");
   switch (rover.direction) {
     case "N":
-    if (board[rover.y - 1][rover.x] == "O"){
-      console.log("The rover has crushed with a obstacle");
-    } else if (rover.y != 0) {
-      rover.y -= 1;
+    if (rover.y != 0) {
+      if (board[rover.y - 1][rover.x] == "O"){
+        console.log("The rover has crushed with a obstacle");
+      } else {
+        rover.y -= 1;
+      }
     }
     break;
     case "E":
-    if (board[rover.y][rover.x + 1] == "O"){
-      console.log("The rover has crushed with a obstacle");
-    } else if (rover.x != 9) {
-      rover.x += 1;
+    if (rover.x != 9) {
+      if (board[rover.y][rover.x + 1] == "O"){
+        console.log("The rover has crushed with a obstacle");
+      } else {
+        rover.x += 1;
+      }
     }
     break;
     case "S":
-    if (board[rover.y + 1][rover.x] == "O"){
-      console.log("The rover has crushed with a obstacle");
-    } else if (rover.y != 9) {
-      rover.y += 1;
+    if (rover.y != 9) {
+      if (board[rover.y + 1][rover.x] == "O"){
+        console.log("The rover has crushed with a obstacle");
+      } else {
+        rover.y += 1;
+      }
     }
     break;
     case "W":
-    if (board[rover.y ][rover.x - 1] == "O"){
-      console.log("The rover has crushed with a obstacle");
-    } else if (rover.x != 0) {
-      rover.x -= 1;
-    }
+    if (rover.x != 0) {
+      if (board[rover.y ][rover.x - 1] == "O"){
+        console.log("The rover has crushed with a obstacle");
+      } else {
+        rover.x -= 1;
+      }
+    } 
     break;
   }
   //console.log("The current position is [" + rover.x + ", " + rover.y + "]");
@@ -86,31 +101,39 @@ function moveBackward(rover){
   // console.log("The start position is [" + rover.x + ", " + rover.y + "]");
    switch (rover.direction) {
      case "N":
-     if (board[rover.y + 1][rover.x] == "O"){
-      console.log("The rover has crushed with a obstacle");
-      } else if (rover.y != 9) {
-       rover.y += 1;
+     if (rover.y != 9) {
+        if (board[rover.y + 1][rover.x] == "O"){
+            console.log("The rover has crushed with a obstacle");
+        } else {
+            rover.y += 1;
+        }
      }
      break;
      case "E":
-     if (board[rover.y][rover.x -1] == "O"){
-      console.log("The rover has crushed with a obstacle");
-      } else if (rover.x != 0) {
-       rover.x -= 1;
+     if (rover.x != 0) {
+       if (board[rover.y][rover.x -1] == "O"){
+          console.log("The rover has crushed with a obstacle");
+       } else {
+        rover.x -= 1;
+       }
      }
      break;
      case "S":
-     if (board[rover.y - 1][rover.x] == "O"){
-      console.log("The rover has crushed with a obstacle");
-     } else if (rover.y != 0) {
-       rover.y -= 1;
+     if (rover.y != 0) {
+        if (board[rover.y - 1][rover.x] == "O") {
+          console.log("The rover has crushed with a obstacle");
+        } else {
+          rover.y -= 1;
+        }
      }
      break;
      case "W":
-     if (board[rover.y][rover.x +1] == "O"){
-      console.log("The rover has crushed with a obstacle");
-     } else if (rover.x != 9) {
-       rover.x += 1;
+     if (rover.x != 9) {
+        if (board[rover.y][rover.x +1] == "O"){
+          console.log("The rover has crushed with a obstacle");
+        } else {
+          rover.x += 1;
+        }
      }
      break;
    }
@@ -118,7 +141,7 @@ function moveBackward(rover){
    rover.travelLog.push("[" + rover.x + ", " + rover.y + "]");
  }
 
-function executeCommand(command){
+function executeCommand(robot, command){
   for (var i = 0; i < command.length; i++){
     if (command[i] !== "r" && command[i] !== "l" && command[i] !== "f" && command[i] !== "b") {
       console.log("The value is incorrect");
@@ -129,22 +152,22 @@ function executeCommand(command){
   for (var i = 0; i < command.length; i++){
     switch (command[i]) {
       case "r":
-      turnRight(rover);
+      turnRight(robot);
       break;
       case "l":
-      turnLeft(rover);
+      turnLeft(robot);
       break;
       case "f":
-      moveForward(rover);
+      moveForward(robot);
       break;
       case "b":
-      moveBackward(rover);
+      moveBackward(robot);
       break;
     }
   }
 
   // console.log(rover.travelLog);
-  printGrid(rover);
+  printGrid();
   
 }
 
@@ -177,29 +200,43 @@ var board = [
 
 
 
-function printGrid(rover) {
+function printGrid() {
   var text = ""
   for (var i = 0; i < 10; i++) {
-    text += "\n-----------------------------------------";
+    text += "\n---------------------------------------------------";
     text += "\n|";
     for (var j = 0; j < 10; j++) {
+
       if (rover.y === i && rover.x === j) {
         if (rover.direction == "N") {
-          text += " ↑ |";
+          text += " R↑ |";
         } else if (rover.direction == "W") {
-         text += " ← |" 
+         text += " ←R |" 
         } else if (rover.direction == "E") {
-          text += " → |" 
+          text += " R→ |" 
         } else {
-          text += " ↓ |" 
+          text += " R↓ |" 
         }
+      } else 
+
+      if (mars.y === i && mars.x === j) {
+        if (mars.direction == "N") {
+          text += " M↑ |";
+        } else if (mars.direction == "W") {
+          text += " ←M |" 
+        } else if (mars.direction == "E") {
+          text += " M→ |" 
+        } else {
+          text += " M↓ |" 
+        }
+
       } else if (board[i][j] === "O") {
-        text += " O |";
+        text += " OB |";
       } else {
-        text += "   |";
+        text += "    |";
       }
     }
   }
-  text += "\n-----------------------------------------";
+  text += "\n---------------------------------------------------";
   console.log(text);
 }
